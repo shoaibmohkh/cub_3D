@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:59:01 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/03 22:57:19 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:07:28 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void mid_wall_checker(t_map *cub_map, int start_of_map)
 
 void map_checker(t_map *cub_map)
 {
+    //RBG color
+    floor_color(cub_map);
+    ceiling_color(cub_map);
     //content of paths
     check_north_path(cub_map);
     check_south_path(cub_map);

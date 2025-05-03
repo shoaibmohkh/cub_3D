@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:39:31 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/03 22:54:15 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:05:47 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ typedef struct s_map
     int     start_of_map;
     int     end_of_map;
     int     index_north_line_no;
-    char     path_north_no[10000];
+    char    path_north_no[10000];
     int     index_south_line_so;
-    char     path_south_so[10000];
+    char    path_south_so[10000];
     int     index_west_line_we;
-    char     path_west_we[10000];
+    char    path_west_we[10000];
     int     index_east_line_ea;
-    char     path_east_ea[10000];
+    char    path_east_ea[10000];
+    int     index_floor_color;
+    int     floor_color[3][1];
+    int     index_ceiling_color;
+    int     ceiling_color[3][1];
 } t_map;
 
 //check_map_content
