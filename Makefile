@@ -1,6 +1,6 @@
 NAME =cub3D
 
-SRCS =src/main.c src/check_argument.c src/check_map_content.c src/get_map.c src/utils_map.c
+SRCS =src/main.c src/get_map.c src/utils_map.c src/exit_and_free.c	src/checker/check_argument.c src/checker/check_map_content.c src/checker/map_paths.c src/checker/rgb_color.c
 OBJ_DIR =obj
 OBJ =$(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 LIBFT_PATH=libft
@@ -24,7 +24,7 @@ $(NAME) : $(OBJ)
 	@$(CC) $^ $(LINKER) -o $@
 
 $(OBJ_DIR)/%.o: src/%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INC) $< -c -o $@
 
 clean:
