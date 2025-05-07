@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 22:03:02 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/06 20:57:18 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/07 23:32:05 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,35 @@ int count_start_of_map(t_all_struct *cub_map)
 
 int count_end_of_map(t_all_struct *cub_map)
 {
-    int i;
+    int i = 0;
+    int line_start = 0;
+    int newline_count = 0;
+    int last_valid_line_newline = 0;
 
-    i = 0;
-    while (cub_map->map.map_two_d[i])
+    while (cub_map->map.map_one_d[i])
+    {
+        if (cub_map->map.map_one_d[i] == '\n' || cub_map->map.map_one_d[i + 1] == '\0')
+        {
+            int is_valid = 0;
+            int end = (cub_map->map.map_one_d[i] == '\n') ? i : i + 1;
+            for (int j = line_start; j < end; j++)
+            {
+                char c = cub_map->map.map_one_d[j];
+                if (c != ' ' && c != '\t' && c != '\n')
+                {
+                    is_valid = 1;
+                    break;
+                }
+            }
+
+            if (is_valid)
+                last_valid_line_newline = newline_count;
+
+            newline_count++;
+            line_start = i + 1;
+        }
         i++;
-    return (i);
+    }
+    return last_valid_line_newline;
 }
+

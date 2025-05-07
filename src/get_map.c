@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:58:21 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/06 20:57:28 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:39:33 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,18 @@ char    *get_real_map_one_d(t_all_struct *cub_map)
 
     total_len = 0;
     i = 0;
-    while (cub_map->map.map_two_d[i])
-        total_len += ft_strlen(cub_map->map.map_two_d[i++]) + 1;
+    while (cub_map->map.real_map_two_d[i])
+        total_len += ft_strlen(cub_map->map.real_map_two_d[i++]) + 1;
     joined = malloc(total_len + 1);
     if (!joined)
         return (NULL);
     pos = 0;
     i = 0;
-    while (cub_map->map.map_two_d[i])
+    while (cub_map->map.real_map_two_d[i])
     {
-        ft_strlcpy(joined + pos, cub_map->map.map_two_d[i], ft_strlen(cub_map->map.map_two_d[i]) + 1);
-        pos += ft_strlen(cub_map->map.map_two_d[i]);
-        if (cub_map->map.map_two_d[i + 1])
+        ft_strlcpy(joined + pos, cub_map->map.real_map_two_d[i], ft_strlen(cub_map->map.real_map_two_d[i]) + 1);
+        pos += ft_strlen(cub_map->map.real_map_two_d[i]);
+        if (cub_map->map.real_map_two_d[i + 1])
             joined[pos++] = '\n';
         i++;
     }
@@ -131,23 +131,43 @@ void    get_and_copies_map(t_all_struct *cub_map, int fd)
     if (!cub_map->map.map_one_d)
         free_all(cub_map, 1
             ,"\033[1;31Worng read:\033[0merror in reading map 📛\n");
+    printf("------ map_one_d ------\n%s\n", cub_map->map.map_one_d);
+
     cub_map->map.map_two_d = ft_split(cub_map->map.map_one_d, '\n');
 	if (!cub_map->map.map_two_d)
         free_all(cub_map, 1
             ,"\033[1;31mmemory allocation fail:\033[0m in -split- 📛\n");
+    printf("------ map_two_d ------\n");
+    for (int i = 0; cub_map->map.map_two_d[i]; i++)
+        printf("[%d]: %s\n", i, cub_map->map.map_two_d[i]);
+
     // start of real map
     cub_map->map.start_of_map = count_start_of_map(cub_map);
     if (cub_map->map.start_of_map == -1)
 		free_all(cub_map, 1, "error in map");
+    printf("------ start_of_map ------\n%d\n", cub_map->map.start_of_map);
+
+    // end of the real map
+    cub_map->map.end_of_map = count_end_of_map(cub_map);
+    if (cub_map->map.real_map_two_d < 0)
+        free_all(cub_map, 1
+            ,"\033[1;31mmemory allocation fail:\033[0m can't copy the map 📛\n");
+    printf("------ end_of_map ------\n%d\n", cub_map->map.end_of_map);
+    
 	// copy real map
     cub_map->map.real_map_two_d = get_real_map_two_d(cub_map);
 	if (!cub_map->map.real_map_two_d)
         free_all(cub_map, 1
             ,"\033[1;31mmemory allocation fail:\033[0m can't copy the map 📛\n");
-	cub_map->map.real_map_one_d = get_real_map_one_d(cub_map);
+    printf("------ real_map_two_d ------\n");
+    for (int i = 0; cub_map->map.real_map_two_d[i]; i++)
+        printf("[%d]: %s\n", i, cub_map->map.real_map_two_d[i]);
+
+    cub_map->map.real_map_one_d = get_real_map_one_d(cub_map);
 	if (!cub_map->map.real_map_one_d)
         free_all(cub_map, 1
             ,"\033[1;31mmemory allocation fail:\033[0m can't copy the map 📛\n");
+    printf("------ real_map_one_d ------\n%s\n", cub_map->map.real_map_one_d);
 }
 
 void	get_map(t_all_struct *cub_map, int fd)
