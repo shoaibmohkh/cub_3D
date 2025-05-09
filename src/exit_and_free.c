@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:42:49 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/06 20:57:49 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:14:13 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,26 @@ void	free_two_d(char **map_two_d)
 	free(map_two_d);
 }
 
-void error_message(char *error)
+void	error_message(char *error)
 {
 	printf("%s", error);
 }
 
-void free_all(t_all_struct *cub_map, int flag, char *error)
+void	free_all(t_all_struct *cub_map, int flag, char *error)
 {
-	error_message(error);
-    free_two_d(cub_map->map.real_map_two_d);
-    free_two_d(cub_map->map.map_two_d);
-    if (cub_map->map.map_one_d)
-		free(cub_map->map.map_one_d);
-    if (cub_map->map.real_map_one_d)
-		free(cub_map->map.real_map_one_d);
-    if (flag)
-        exit(EXIT_FAILURE);
+	if (error)
+		error_message(error);
+	if (cub_map)
+	{
+		if (cub_map->map.real_map_two_d)
+			free_two_d(cub_map->map.real_map_two_d);
+		if (cub_map->map.map_two_d)
+			free_two_d(cub_map->map.map_two_d);
+		if (cub_map->map.map_one_d)
+			free(cub_map->map.map_one_d);
+		if (cub_map->map.real_map_one_d)
+			free(cub_map->map.real_map_one_d);
+	}
+	if (flag)
+		exit(EXIT_FAILURE);
 }
-

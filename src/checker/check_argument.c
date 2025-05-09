@@ -6,47 +6,53 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 22:02:13 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/03 22:12:37 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:02:39 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	input_checker(int argc, char **argv)
+int	check_extension(char *filename)
 {
 	int	i;
+
+	i = 0;
+	while (filename[i])
+		i++;
+	i -= 4;
+	if (filename[i] == '.')
+	{
+		if (filename[i + 1] == 'c')
+		{
+			if (filename[i + 2] == 'u')
+			{
+				if (filename[i + 3] == 'b')
+					return (0);
+				else
+					return (2);
+			}
+			else
+				return (2);
+		}
+		else
+			return (2);
+	}
+	else
+		return (2);
+}
+
+int	input_checker(int argc, char **argv)
+{
 	int	r;
 
 	r = 0;
-	i = 0;
 	if (argc != 2)
 	{
-		printf("\033[1;31mwrong argumet:\033[0m error in number of argumet 🤔\n");
+		printf("\033[1;31merror in number of argumet\033[0m 🤔\n");
 		return (1);
 	}
-	while (argv[1][i])
-		i++;
-	i -= 4;
-	if (argv[1][i] == '.') // check the end name of file
-	{
-		if (argv[1][i + 1] == 'c')
-		{
-			if (argv[1][i + 2] == 'u')
-			{
-				if (argv[1][i + 3] == 'b')
-					r = 0;
-				else
-					r = 2;
-			}
-			else
-				r = 2;
-		}
-		else
-			r = 2;
-	}
-	else
-		r = 2;
+	r = check_extension(argv[1]);
 	if (r == 2)
-		printf("\033[1;31mwrong argumet:\033[0m error in name MAP 🤔\n");
+		printf("\033[1;31merror in name MAP\033[0m 🤔\n");
 	return (r);
 }

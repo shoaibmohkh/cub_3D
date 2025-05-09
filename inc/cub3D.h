@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:39:31 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/06 21:04:00 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:20:30 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "../libft/inc/get_next_line.h"
 # include "../libft/inc/libft.h"
 # include <X11/keysym.h>
+# include <ctype.h>
+# include <string.h>
 # include <mlx.h>
 
 typedef struct s_point
@@ -51,6 +53,9 @@ typedef struct s_map
     int     floor_color[3];
     int     index_ceiling_color;
     int     ceiling_color[3];
+
+    int x_player;
+    int y_player;
 } t_map;
 
 typedef struct s_all_struct
@@ -63,7 +68,7 @@ typedef struct s_all_struct
 //check_map_content
 void        check_chararcters(t_all_struct *cub_map);
 void        wall_checker(t_all_struct *cub_map, int pos);
-void        mid_wall_checker(t_all_struct *cub_map, int start_of_map);
+void        mid_wall_checker(t_all_struct *cub_map);
 void        map_checker(t_all_struct *cub_map);
 
 //get_map
@@ -91,12 +96,12 @@ void        check_west_path(t_all_struct *cub_map);
 void        check_east_path(t_all_struct *cub_map);
 void        check_befor_real_map(t_all_struct *cub_map);
 
-//solveing map
-int         ft_is_player(char c);
-int         ft_is_walkable(char c);
-char	    **ft_copy_map(char **map, int rows);
-int         ft_check_bounds(int x, int y, char **map, int rows);
-int         ft_check_map_validity(t_map *cub);
+//solve map
+int	ft_check_map_validity(t_all_struct *cub);
+int	ft_check_bounds(int x, int y, char **map, int rows);
+char	**ft_copy_map(char **map, int rows);
+int	ft_is_walkable(char c);
+int	ft_is_player(char c);
 
 //RGB color
 void	    ceiling_color(t_all_struct *cub_map);
@@ -110,4 +115,6 @@ void        free_all(t_all_struct *cub_map, int flag, char *error);
 void        error_message(char *error);
 int	input_checker(int argc, char **argv);
 
+void last_wall_checker(t_all_struct *cub_map);
+void print_struct(t_all_struct *cub_map);
 #endif

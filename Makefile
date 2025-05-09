@@ -1,6 +1,6 @@
 NAME =cub3D
 
-SRCS =src/main.c src/get_map.c src/utils_map.c src/exit_and_free.c	src/checker/check_argument.c src/checker/check_map_content.c src/checker/map_paths.c src/checker/rgb_color.c
+SRCS =src/main.c src/get_full_map.c src/utils_map.c src/exit_and_free.c	src/checker/check_argument.c src/checker/check_map_solve.c src/checker/check_map_content.c src/checker/map_paths.c src/checker/rgb_color.c src/print_struct.c src/get_real_map.c
 OBJ_DIR =obj
 OBJ =$(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 LIBFT_PATH=libft
