@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 13:39:31 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/08 19:20:30 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:59:48 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <X11/keysym.h>
 # include <ctype.h>
 # include <string.h>
-# include <mlx.h>
+#include "MLX42/MLX42.h"
+#define WIDTH 800
+#define HEIGHT 600
 
 typedef struct s_point
 {
@@ -117,4 +119,5 @@ int	input_checker(int argc, char **argv);
 
 void last_wall_checker(t_all_struct *cub_map);
 void print_struct(t_all_struct *cub_map);
+
 #endif

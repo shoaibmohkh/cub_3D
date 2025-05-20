@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:59:01 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/09 03:12:17 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:16:59 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,43 +151,9 @@ void	mid_wall_checker(t_all_struct *cub_map)
 	check_wall_end_indices(cub_map);
 }
 
-int	is_before_map_token(char c, char next)
-{
-	if ((c == 'N' && next == 'O') || (c == 'S' && next == 'O') || (c == 'W'
-			&& next == 'E') || (c == 'E' && next == 'A') || (c == 'C'
-			&& next == ' ') || (c == 'F' && next == ' '))
-		return (1);
-	return (0);
-}
-
-int	count_before_real_map(t_all_struct *cub_map)
-{
-	int	i;
-	int	j;
-	int	f;
-
-	i = 0;
-	j = 0;
-	f = 0;
-	while (i < cub_map->map.start_of_map)
-	{
-		while (cub_map->map.map_two_d[i][j] == 32
-			|| cub_map->map.map_two_d[i][j] == 9)
-			j++;
-		if (cub_map->map.map_two_d[i][j]
-			&& is_before_map_token(cub_map->map.map_two_d[i][j],
-				cub_map->map.map_two_d[i][j + 1]))
-		{
-			f++;
-		}
-		i++;
-	}
-	return (f);
-}
-
 void	check_befor_real_map(t_all_struct *cub_map)
 {
-	if (count_before_real_map(cub_map) > 6)
+	if (cub_map->map.start_of_map != 6)
 		free_all(cub_map, 1,
 				"\033[1;31mnumber of paths not okay\033[0m 😶‍🌫️\n");
 }

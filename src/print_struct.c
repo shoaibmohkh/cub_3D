@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:09:27 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/08 19:17:06 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:03:51 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,17 @@ void	print_struct(t_all_struct *cub_map)
 	printf("------ real_map_one_d ------\n%s\n", cub_map->map.real_map_one_d);
 	printf("------ cout_col ------\n%d\n", cub_map->map.col);
 	printf("------ count_row ------\n%d\n", cub_map->map.row);
-	printf("------ floor_color------\n");
-	while (cub_map->map.floor_color[i])
+    printf("------ floor_color ------\n");
+    for (i = 0; i < 3; i++)
 	{
-		printf("%i\n", cub_map->map.floor_color[i]);
-		i++;
+        printf("%d\n", cub_map->map.floor_color[i]);
 	}
-	printf("------ ceiling_color------\n");
-	i = 0;
-	while (cub_map->map.ceiling_color[i])
+	printf("------ ceiling_color ------\n");
+    for (i = 0; i < 3; i++)
 	{
-		printf("%i\n", cub_map->map.ceiling_color[i]);
-		i++;
+        printf("%d\n", cub_map->map.ceiling_color[i]);
 	}
+	printf("------ paths------\n");
 	printf("no path: %s\n", cub_map->map.path_north_no);
 	printf("so path: %s\n", cub_map->map.path_south_so);
 	printf("we path: %s\n", cub_map->map.path_west_we);
