@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:09:27 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/20 14:03:51 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:21:40 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,6 @@ void	print_struct(t_all_struct *cub_map)
 	printf("so path: %s\n", cub_map->map.path_south_so);
 	printf("we path: %s\n", cub_map->map.path_west_we);
 	printf("ea path: %s\n", cub_map->map.path_east_ea);
+	printf("------redir of player------\n");
+	printf("%c\n", cub_map->map.start_direction_of_player);
 }

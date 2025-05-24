@@ -6,200 +6,81 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 22:49:30 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/08 23:52:55 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/24 20:51:49 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	extract_north_path(t_all_struct *cub_map, int i, int j)
+int	extract_path(t_all_struct *cub_map, int i, int j, char *dest, int *index)
 {
 	int	path;
 
-	cub_map->map.index_north_line_no = j;
+	*index = j;
 	j += 2;
-	while (cub_map->map.map_two_d[i][j] == 32
-		|| cub_map->map.map_two_d[i][j] == 9)
+	while (cub_map->map.map_two_d[i][j] == ' ' || cub_map->map.map_two_d[i][j] == '\t')
 		j++;
 	path = 0;
-	while (cub_map->map.map_two_d[i][j] && cub_map->map.map_two_d[i][j] != 32
-		&& cub_map->map.map_two_d[i][j] != 9)
-		cub_map->map.path_north_no[path++] = cub_map->map.map_two_d[i][j++];
-	cub_map->map.path_north_no[path++] = '\0';
+	while (cub_map->map.map_two_d[i][j] && cub_map->map.map_two_d[i][j] != ' '
+		&& cub_map->map.map_two_d[i][j] != '\t')
+		dest[path++] = cub_map->map.map_two_d[i][j++];
+	dest[path] = '\0';
 	cub_map->map.num_paths++;
 	return (j);
 }
 
-void	check_north_path(t_all_struct *cub_map)
+void	check_path(t_all_struct *cub_map, char *id, char *dest, int *index, char *error_msg)
 {
-	int	i;
+	int	i = 0;
 	int	j;
 
-	i = 0;
-	while (cub_map->map.map_two_d[i] && (i < cub_map->map.start_of_map))
+	while (cub_map->map.map_two_d[i] && i < cub_map->map.start_of_map)
 	{
 		j = 0;
-		while (cub_map->map.map_two_d[i][j] == 32
-			|| cub_map->map.map_two_d[i][j] == 9)
+		while (cub_map->map.map_two_d[i][j] == ' ' || cub_map->map.map_two_d[i][j] == '\t')
 			j++;
-		if (cub_map->map.map_two_d[i][j] == 'N' && cub_map->map.map_two_d[i][j + 1] == 'O'
-            && (cub_map->map.map_two_d[i][j + 2] == 32
-			|| cub_map->map.map_two_d[i][j + 2] == 9))
+		if (cub_map->map.map_two_d[i][j] == id[0]
+			&& cub_map->map.map_two_d[i][j + 1] == id[1]
+			&& (cub_map->map.map_two_d[i][j + 2] == ' '
+				|| cub_map->map.map_two_d[i][j + 2] == '\t'))
 		{
-			j = extract_north_path(cub_map, i, j);
-			while (cub_map->map.map_two_d[i][j] == 32
-				|| cub_map->map.map_two_d[i][j] == 9)
+			j = extract_path(cub_map, i, j, dest, index);
+			while (cub_map->map.map_two_d[i][j] == ' ' || cub_map->map.map_two_d[i][j] == '\t')
 				j++;
 			if (cub_map->map.map_two_d[i][j] != '\0')
-				break ;
-			return ;
+				break;
+			return;
 		}
 		i++;
 	}
-	free_all(cub_map, 1,
-			"\033[1;31mMissed path:\033[0m there is no north path 😤\n");
+	free_all(cub_map, 1, error_msg);
 }
 
-int	extract_south_path(t_all_struct *cub_map, int i, int j)
-{
-	int	path;
 
-	cub_map->map.index_south_line_so = j;
-	j += 2;
-	while (cub_map->map.map_two_d[i][j] == 32
-		|| cub_map->map.map_two_d[i][j] == 9)
-		j++;
-	path = 0;
-	while (cub_map->map.map_two_d[i][j] && cub_map->map.map_two_d[i][j] != 32
-		&& cub_map->map.map_two_d[i][j] != 9)
-		cub_map->map.path_south_so[path++] = cub_map->map.map_two_d[i][j++];
-	cub_map->map.path_south_so[path++] = '\0';
-	cub_map->map.num_paths++;
-	return (j);
+void	check_north_path(t_all_struct *cub_map)
+{
+	check_path(cub_map, "NO", cub_map->map.path_north_no,
+		&cub_map->map.index_north_line_no,
+		"\033[1;31mMissed path:\033[0m there is no north path 😤\n");
 }
 
 void	check_south_path(t_all_struct *cub_map)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (cub_map->map.map_two_d[i] && (i < cub_map->map.start_of_map))
-	{
-		j = 0;
-		while (cub_map->map.map_two_d[i][j] == 32
-			|| cub_map->map.map_two_d[i][j] == 9)
-			j++;
-		if (cub_map->map.map_two_d[i][j] == 'S' && cub_map->map.map_two_d[i][j + 1] == 'O'
-            && (cub_map->map.map_two_d[i][j + 2] == 32
-			|| cub_map->map.map_two_d[i][j + 2] == 9))
-		{
-			j = extract_south_path(cub_map, i, j);
-			while (cub_map->map.map_two_d[i][j] == 32
-				|| cub_map->map.map_two_d[i][j] == 9)
-				j++;
-			if (cub_map->map.map_two_d[i][j] != '\0')
-				break ;
-			return ;
-		}
-		i++;
-	}
-	free_all(cub_map, 1,
-			"\033[1;31mMissed path:\033[0m there is no south path 😤\n");
-}
-
-int	extract_west_path(t_all_struct *cub_map, int i, int j)
-{
-	int	path;
-
-	cub_map->map.index_west_line_we = j;
-	j += 2;
-	while (cub_map->map.map_two_d[i][j] == 32
-		|| cub_map->map.map_two_d[i][j] == 9)
-		j++;
-	path = 0;
-	while (cub_map->map.map_two_d[i][j] && cub_map->map.map_two_d[i][j] != 32
-		&& cub_map->map.map_two_d[i][j] != 9)
-		cub_map->map.path_west_we[path++] = cub_map->map.map_two_d[i][j++];
-	cub_map->map.path_west_we[path++] = '\0';
-	cub_map->map.num_paths++;
-	return (j);
+	check_path(cub_map, "SO", cub_map->map.path_south_so,
+		&cub_map->map.index_south_line_so,
+		"\033[1;31mMissed path:\033[0m there is no south path 😤\n");
 }
 
 void	check_west_path(t_all_struct *cub_map)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (cub_map->map.map_two_d[i] && (i < cub_map->map.start_of_map))
-	{
-		j = 0;
-		while (cub_map->map.map_two_d[i][j] == 32
-			|| cub_map->map.map_two_d[i][j] == 9)
-			j++;
-		if (cub_map->map.map_two_d[i][j] == 'W' && cub_map->map.map_two_d[i][j + 1] == 'E'
-            && (cub_map->map.map_two_d[i][j + 2] == 32
-			|| cub_map->map.map_two_d[i][j + 2] == 9))
-		{
-			j = extract_west_path(cub_map, i, j);
-			while (cub_map->map.map_two_d[i][j] == 32
-				|| cub_map->map.map_two_d[i][j] == 9)
-				j++;
-			if (cub_map->map.map_two_d[i][j] != '\0')
-				break ;
-			return ;
-		}
-		i++;
-	}
-	free_all(cub_map, 1,
-			"\033[1;31mMissed path:\033[0m there is no west path 😤\n");
-}
-
-int	extract_east_path(t_all_struct *cub_map, int i, int j)
-{
-	int	path;
-
-	cub_map->map.index_east_line_ea = j;
-	j += 2;
-	while (cub_map->map.map_two_d[i][j] == 32
-		|| cub_map->map.map_two_d[i][j] == 9)
-		j++;
-	path = 0;
-	while (cub_map->map.map_two_d[i][j] && cub_map->map.map_two_d[i][j] != 32
-		&& cub_map->map.map_two_d[i][j] != 9)
-		cub_map->map.path_east_ea[path++] = cub_map->map.map_two_d[i][j++];
-	cub_map->map.path_east_ea[path++] = '\0';
-	cub_map->map.num_paths++;
-	return (j);
+	check_path(cub_map, "WE", cub_map->map.path_west_we,
+		&cub_map->map.index_west_line_we,
+		"\033[1;31mMissed path:\033[0m there is no west path 😤\n");
 }
 
 void	check_east_path(t_all_struct *cub_map)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (cub_map->map.map_two_d[i] && (i < cub_map->map.start_of_map))
-	{
-		j = 0;
-		while (cub_map->map.map_two_d[i][j] == 32
-            || cub_map->map.map_two_d[i][j] == 9)
-			j++;
-		if (cub_map->map.map_two_d[i][j] == 'E' && cub_map->map.map_two_d[i][j + 1] == 'A'
-            && (cub_map->map.map_two_d[i][j + 2] == 32
-			|| cub_map->map.map_two_d[i][j + 2] == 9))
-		{
-			j = extract_east_path(cub_map, i, j);
-			while (cub_map->map.map_two_d[i][j] == 32
-				|| cub_map->map.map_two_d[i][j] == 9)
-				j++;
-			if (cub_map->map.map_two_d[i][j] != '\0')
-				break ;
-			return ;
-		}
-		i++;
-	}
-	free_all(cub_map, 1,
-			"\033[1;31mMissed path:\033[0m there is no east path 😤\n");
+	check_path(cub_map, "EA", cub_map->map.path_east_ea,
+		&cub_map->map.index_east_line_ea,
+		"\033[1;31mMissed path:\033[0m there is no east path 😤\n");
 }

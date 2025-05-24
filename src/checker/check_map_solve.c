@@ -3,30 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_solve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:01:06 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/08 19:21:45 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:20:29 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
 int	ft_is_player(char c)
 {
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	if (c == 'N')
+		return (1);
+	if (c == 'S')
+		return (2);
+	if (c == 'E')
+		return (3);
+	if (c == 'W')
+		return (4);
+	return (0);
 }
-
 int	ft_is_walkable(char c)
 {
 	return (c == '0' || c == ' ' || ft_is_player(c));
 }
-
 char	**ft_copy_map(char **map, int rows)
 {
 	char	**copy;
 	int		i;
-
 	copy = malloc(sizeof(char *) * (rows + 1));
 	if (!copy)
 		return (NULL);
@@ -46,15 +50,12 @@ char	**ft_copy_map(char **map, int rows)
 	copy[rows] = NULL;
 	return (copy);
 }
-
 int	ft_check_bounds(int x, int y, char **map, int rows)
 {
 	if (y < 0 || y >= rows || x < 0 || x >= (int)ft_strlen(map[y]))
 		return (0);
 	return (1);
 }
-
-
 int	ft_check_map_validity(t_all_struct *cub)
 {
 	t_point	queue[10000];
@@ -69,7 +70,6 @@ int	ft_check_map_validity(t_all_struct *cub)
 	int		nx;
 	int		ny;
 	int		player_count;
-
 	dx[0] = 1; dx[1] = -1; dx[2] = 0; dx[3] = 0;
 	dy[0] = 0; dy[1] = 0; dy[2] = 1; dy[3] = -1;
 	map = ft_copy_map(cub->map.real_map_two_d, cub->map.row);
@@ -91,6 +91,14 @@ int	ft_check_map_validity(t_all_struct *cub)
 				player.y = y;
 				cub->map.x_player = x;
 				cub->map.y_player = y;
+				if (ft_is_player(map[y][x]) == 1)
+					cub->map.start_direction_of_player = 'N';
+				if (ft_is_player(map[y][x]) == 2)
+					cub->map.start_direction_of_player = 'S';
+				if (ft_is_player(map[y][x]) == 3)
+					cub->map.start_direction_of_player = 'E';
+				if (ft_is_player(map[y][x]) == 4)
+					cub->map.start_direction_of_player = 'W';
 			}
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_full_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:58:21 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/08 23:16:02 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:29:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,16 @@ void	get_and_copies_map(t_all_struct *cub_map, int fd)
 	cub_map->map.map_one_d = reading_file(fd);
 	if (!cub_map->map.map_one_d)
 		free_all(cub_map, 1,
-            "\033[1;31error in reading map\033[0m 📛\n");
+			"\033[1;31merror in reading map\033[0m 📛\n");
 	cub_map->map.map_two_d = ft_split(cub_map->map.map_one_d, '\n');
 	if (!cub_map->map.map_two_d)
 		free_all(cub_map, 1,
-            "\033[1;31fail: in -split-\033[0m 📛\n");
+			"\033[1;31mfail: in -split-\033[0m 📛\n");
 	cub_map->map.start_of_map = count_start_of_map(cub_map);
 	if (cub_map->map.start_of_map == -1)
 		free_all(cub_map, 1,
-            "\033[1;31fail: can't find the map\033[0m 📛\n");
+			"\033[1;31mfail: can't find the map\033[0m 📛\n");
 	cub_map->map.end_of_map = count_end_of_map(cub_map);
-	if (cub_map->map.real_map_two_d < 0)
-		free_all(cub_map, 1,
-			"\033[1;31mfail: can't find last index in map\033[0m 📛\n");
 	cub_map->map.real_map_two_d = get_real_map_two_d(cub_map);
 	if (!cub_map->map.real_map_two_d)
 		free_all(cub_map, 1,

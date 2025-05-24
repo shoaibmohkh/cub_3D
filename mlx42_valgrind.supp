@@ -1,0 +1,27 @@
+{
+   MLX42_GLFW_InvalidRead
+   Memcheck:Addr8
+   fun:strncmp
+   ...
+   fun:_dl_*
+}
+{
+   MLX42_GLFW_Leak
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:_dl_*
+}
+{
+   MLX42_GLFW_Leak2
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:dlopen*
+}
+{
+   MLX42_GLFW_Cond
+   Memcheck:Cond
+   fun:mlx_*
+   ...
+}
