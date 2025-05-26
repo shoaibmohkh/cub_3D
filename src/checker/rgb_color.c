@@ -3,42 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_color.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:06:15 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 13:38:45 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/26 20:18:21 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+char	**split_rgb_tokens(char *s, char ***tokens)
+{
+	int	count;
+
+	*tokens = ft_split(s, ',');
+	if (!*tokens)
+		return (NULL);
+	count = 0;
+	while ((*tokens)[count])
+		count++;
+	if (count != 3)
+	{
+		free_two_d(*tokens);
+		return (NULL);
+	}
+	return (malloc(sizeof(char *) * 4));
+}
+
 char	**split_rgb(char *s)
 {
 	char	**tokens;
 	char	**rgb;
-	int		count;
+	int		i;
 
+	i = 0;
 	if (!s)
 		return (NULL);
-	tokens = ft_split(s, ',');
-	if (!tokens)
-		return (NULL);
-	count = 0;
-	while (tokens[count])
-		count++;
-	if (count != 3)
-	{
-		free_two_d(tokens);
-		return (NULL);
-	}
-	rgb = malloc(sizeof(char *) * 4);
+	rgb = split_rgb_tokens(s, &tokens);
 	if (!rgb)
-	{
-		free_two_d(tokens);
 		return (NULL);
-	}
 	rgb[3] = NULL;
-	for (int i = 0; i < 3; i++)
+	while (i < 3)
 	{
 		rgb[i] = ft_strtrim(tokens[i], " \t");
 		if (!rgb[i])
@@ -47,40 +52,15 @@ char	**split_rgb(char *s)
 			free_two_d(rgb);
 			return (NULL);
 		}
+		i++;
 	}
 	free_two_d(tokens);
 	return (rgb);
 }
 
-int	is_valid_rgb(char **rgb)
-{
-	int	i;
-	int	val;
-
-	if (!rgb)
-		return (0);
-	i = 0;
-	while (i < 3)
-	{
-		if (!rgb[i] || !*rgb[i])
-			return (0);
-		for (int j = 0; rgb[i][j]; j++)
-		{
-			if (!ft_isdigit(rgb[i][j]))
-				return (0);
-		}
-		val = ft_atoi(rgb[i]);
-		if (val < 0 || val > 255)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	floor_color(t_all_struct *cub_map)
 {
 	char	*line;
-	char	**rgb;
 	int		i;
 
 	i = -1;
@@ -91,16 +71,7 @@ void	floor_color(t_all_struct *cub_map)
 			continue ;
 		if (line[0] == 'F' && line[1] == ' ')
 		{
-			rgb = split_rgb(line + 2);
-			free(line);
-			if (!rgb || !is_valid_rgb(rgb))
-			{
-				free_two_d(rgb);
-				free_all(cub_map, 1, "\033[1;31merror in MAP\033[0m 😤\n");
-			}
-			for (int j = 0; j < 3; j++)
-				cub_map->map.floor_color[j] = ft_atoi(rgb[j]);
-			free_two_d(rgb);
+			handle_color_line(cub_map, line, cub_map->map.floor_color);
 			return ;
 		}
 		free(line);
@@ -111,7 +82,6 @@ void	floor_color(t_all_struct *cub_map)
 void	ceiling_color(t_all_struct *cub_map)
 {
 	char	*line;
-	char	**rgb;
 	int		i;
 
 	i = -1;
@@ -122,16 +92,7 @@ void	ceiling_color(t_all_struct *cub_map)
 			continue ;
 		if (line[0] == 'C' && line[1] == ' ')
 		{
-			rgb = split_rgb(line + 2);
-			free(line);
-			if (!rgb || !is_valid_rgb(rgb))
-			{
-				free_two_d(rgb);
-				free_all(cub_map, 1, "\033[1;31merror in MAP\033[0m 😤\n");
-			}
-			for (int j = 0; j < 3; j++)
-				cub_map->map.ceiling_color[j] = ft_atoi(rgb[j]);
-			free_two_d(rgb);
+			handle_color_line(cub_map, line, cub_map->map.ceiling_color);
 			return ;
 		}
 		free(line);

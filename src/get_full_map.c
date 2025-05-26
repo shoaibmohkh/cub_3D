@@ -3,74 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_full_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:58:21 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 19:00:34 by zsalah           ###   ########.fr       */
+/*   Updated: 2025/05/26 19:13:19 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char	*join_lines(char *str, char *line, int fd)
-{
-	char	*tmp;
-
-	(void)fd;
-	tmp = str;
-	str = ft_strjoin(str, line);
-	if (!str)
-	{
-		printf("\033[1;31mmemory allocation fail:\033[0m in -strjoin- 📛\n");
-		free(tmp);
-		return (NULL);
-	}
-	free(tmp);
-	return (str);
-}
-
-int	is_all_whitespace(const char *s)
-{
-	while (*s)
-	{
-		if (*s != ' ' && *s != '\t' && *s != '\n')
-			return (0);
-		s++;
-	}
-	return (1);
-}
-
 char	*read_and_join_lines(int fd, char *str)
 {
 	char	*line;
-	char	*trimmed;
+
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (is_all_whitespace(line))
-		{
-			trimmed = ft_strtrim(line, " \t");
-			free(line);
-			line = trimmed;
-			if (!line)
-			{
-				close(fd);
-				free(str);
-				exit(1);
-			}
-		}
-		str = join_lines(str, line, fd);
-		free(line);
-		if (!str)
-		{
-			close(fd);
-			exit(1);
-		}
+		str = process_line(line, str, fd);
 		line = get_next_line(fd);
 	}
 	return (str);
 }
-
 
 char	*reading_file(int fd)
 {

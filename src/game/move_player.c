@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:54:02 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 16:42:32 by zsalah           ###   ########.fr       */
+/*   Updated: 2025/05/26 20:38:21 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-bool	touch(float px, float py, t_all_struct *cub_map)
+int	touch(float px, float py, t_all_struct *cub_map)
 {
 	int	x;
 	int	y;
@@ -20,7 +20,7 @@ bool	touch(float px, float py, t_all_struct *cub_map)
 	x = px / BLOCK;
 	y = py / BLOCK;
 	if (x < 0 || y < 0 || !cub_map->game.map[y] || !cub_map->game.map[y][x])
-		return (true);
+		return (1);
 	return (cub_map->game.map[y][x] == '1');
 }
 
