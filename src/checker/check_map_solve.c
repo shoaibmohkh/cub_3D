@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_solve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:01:06 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/22 19:20:29 by zsalah           ###   ########.fr       */
+/*   Updated: 2025/05/26 16:30:20 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
 int	ft_is_player(char c)
 {
 	if (c == 'N')
@@ -23,14 +24,17 @@ int	ft_is_player(char c)
 		return (4);
 	return (0);
 }
+
 int	ft_is_walkable(char c)
 {
 	return (c == '0' || c == ' ' || ft_is_player(c));
 }
+
 char	**ft_copy_map(char **map, int rows)
 {
 	char	**copy;
 	int		i;
+
 	copy = malloc(sizeof(char *) * (rows + 1));
 	if (!copy)
 		return (NULL);
@@ -50,12 +54,14 @@ char	**ft_copy_map(char **map, int rows)
 	copy[rows] = NULL;
 	return (copy);
 }
+
 int	ft_check_bounds(int x, int y, char **map, int rows)
 {
 	if (y < 0 || y >= rows || x < 0 || x >= (int)ft_strlen(map[y]))
 		return (0);
 	return (1);
 }
+
 int	ft_check_map_validity(t_all_struct *cub)
 {
 	t_point	queue[10000];
@@ -70,8 +76,15 @@ int	ft_check_map_validity(t_all_struct *cub)
 	int		nx;
 	int		ny;
 	int		player_count;
-	dx[0] = 1; dx[1] = -1; dx[2] = 0; dx[3] = 0;
-	dy[0] = 0; dy[1] = 0; dy[2] = 1; dy[3] = -1;
+
+	dx[0] = 1;
+	dx[1] = -1;
+	dx[2] = 0;
+	dx[3] = 0;
+	dy[0] = 0;
+	dy[1] = 0;
+	dy[2] = 1;
+	dy[3] = -1;
 	map = ft_copy_map(cub->map.real_map_two_d, cub->map.row);
 	if (!map)
 		return (0);

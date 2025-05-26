@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_map.c                                         :+:      :+:    :+:   */
+/*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:54:02 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/24 20:11:50 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:34:36 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void move_player(t_all_struct *cub_map)
     float new_y;
 
     move_speed = 8.0f;
-    rot_speed = 0.05f;
+    rot_speed = 0.02f;
     new_x = cub_map->player.x;
     new_y = cub_map->player.y;
     if (cub_map->player.key_up)

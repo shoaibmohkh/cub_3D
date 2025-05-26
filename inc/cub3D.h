@@ -16,13 +16,11 @@
 #define BLOCK 64
 #define M_PI 3.14159265358979323846
 
-// Structs
-
 typedef struct s_texture {
-    mlx_texture_t *texture; // MLX42 texture
-    mlx_image_t *img;       // MLX42 image for rendering
-    int width;              // Texture width
-    int height;             // Texture height
+    mlx_texture_t *texture;
+    mlx_image_t *img;
+    int width;
+    int height;
 } t_texture;
 
 typedef struct s_player {
@@ -69,13 +67,13 @@ typedef struct s_point {
     int y;
 } t_point;
 
-typedef struct s_all_struct t_all_struct; // Forward declaration
+typedef struct s_all_struct t_all_struct;
 
 typedef struct s_game {
     mlx_t *mlx;
     mlx_image_t *img;
     char **map;
-    t_all_struct *all_struct; // Pointer to t_all_struct
+    t_all_struct *all_struct;
     t_texture north;
     t_texture south;
     t_texture east;
@@ -90,7 +88,14 @@ typedef struct s_all_struct {
     t_player player;
 } t_all_struct;
 
-// Function declarations
+
+
+
+char	**prepare_map_and_player(t_all_struct *cub, t_point *player);
+int		count_and_store_player(char **map, t_all_struct *cub, t_point *player);
+void	update_player_info(t_all_struct *cub, t_point *player, int x, int y, char c);
+int		find_player_and_set_direction(char **map, t_all_struct *cub, t_point *player);
+int		flood_fill_map(char **map, int rows, t_point *queue, int *back); 
 
 float fixed_dist(float x1, float y1, float x2, float y2, t_all_struct *cub_map);
 void draw_line(t_all_struct *cub_map, float ray_angle, int i);

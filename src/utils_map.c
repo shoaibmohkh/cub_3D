@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 22:03:02 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/08 22:42:06 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:21:34 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int	count_row(t_all_struct *cub_map)
 {
 	int	i;
 
-	// 1111111
-	// 1111111
-	// 1111111 ==> 3 row
 	i = 0;
 	while (cub_map->map.real_map_two_d[i])
 		i++;
@@ -31,9 +28,6 @@ int	count_col(t_all_struct *cub_map)
 	int	current_col;
 	int	i;
 
-	// 1234567
-	// 1111111
-	// 1111111 ==> 7 col
 	max_col = 0;
 	i = 0;
 	while (cub_map->map.real_map_two_d[i])
@@ -102,14 +96,34 @@ void	update_last_valid_line(int *last_valid_line_newline, int newline_count,
 		*last_valid_line_newline = newline_count;
 }
 
+void	process_line_check(t_all_struct *cub_map,
+		int *i, int *line_start,
+		int *newline_count, int *last_valid_line_newline)
+{
+	int	end;
+	int	is_valid;
+
+	if (cub_map->map.map_one_d[*i] == '\n'
+		|| cub_map->map.map_one_d[*i + 1] == '\0')
+	{
+		if (cub_map->map.map_one_d[*i] == '\n')
+			end = *i;
+		else
+			end = *i + 1;
+		is_valid = check_if_line_is_valid(cub_map, *line_start, end);
+		update_last_valid_line(last_valid_line_newline,
+			*newline_count, is_valid);
+		(*newline_count)++;
+		*line_start = *i + 1;
+	}
+}
+
 int	count_end_of_map(t_all_struct *cub_map)
 {
 	int	i;
 	int	line_start;
 	int	newline_count;
 	int	last_valid_line_newline;
-	int	end;
-	int	is_valid;
 
 	i = 0;
 	line_start = 0;
@@ -117,19 +131,10 @@ int	count_end_of_map(t_all_struct *cub_map)
 	last_valid_line_newline = 0;
 	while (cub_map->map.map_one_d[i])
 	{
-		if (cub_map->map.map_one_d[i] == '\n' || cub_map->map.map_one_d[i + 1] == '\0')
-		{
-			if (cub_map->map.map_one_d[i] == '\n')
-				end = i;
-			else
-				end = i + 1;
-			is_valid = check_if_line_is_valid(cub_map, line_start, end);
-			update_last_valid_line(&last_valid_line_newline, newline_count,
-                is_valid);
-			newline_count++;
-			line_start = i + 1;
-		}
+		process_line_check(cub_map, &i, &line_start,
+			&newline_count, &last_valid_line_newline);
 		i++;
 	}
 	return (last_valid_line_newline);
 }
+

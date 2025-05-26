@@ -14,7 +14,8 @@ void map_checker(t_all_struct *cub_map)
     last_wall_checker(cub_map);
     mid_wall_checker(cub_map);
     if (!ft_check_map_validity(cub_map))
-        free_all(cub_map, 1, "not a valid map");
+        free_all(cub_map, 1,
+            "\033[1;31merror in MAP\033[0m 😤\n");
 }
 
 int map(t_all_struct *cub_map, int argc, char **argv)
@@ -24,7 +25,7 @@ int map(t_all_struct *cub_map, int argc, char **argv)
         return (1);
     fd = open(argv[1], O_RDONLY);
     if (fd == -1) {
-        printf("\033[1;31mwrong argument: can't open it\033[0m ⛓️‍💥\n");
+        printf("\033[1;31merror in MAP\033[0m 😤\n");
         return (1);
     }
     get_map(cub_map, fd);

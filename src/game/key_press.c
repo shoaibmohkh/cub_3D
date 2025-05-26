@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:55:40 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/24 20:47:24 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/24 21:13:45 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ void key_handler(mlx_key_data_t keydata, void *param)
 
     cub_map = (t_all_struct *)param;
     if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-    {
-        // free_all(cub_map, 0, NULL);
         mlx_close_window(cub_map->game.mlx);
-    }
     key_press(keydata, cub_map);
 }

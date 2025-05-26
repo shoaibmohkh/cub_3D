@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_full_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:58:21 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/23 02:29:38 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/26 15:06:37 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,32 @@ char	*join_lines(char *str, char *line, int fd)
 char	*read_and_join_lines(int fd, char *str)
 {
 	char	*line;
+	char	*trimmed;
 
 	line = get_next_line(fd);
 	while (line)
 	{
-		str = join_lines(str, line, fd);
+		trimmed = ft_strtrim(line, " \t");
+		free(line);
+		line = NULL;
+		if (!trimmed)
+		{
+			close(fd);
+			free(str);
+			exit(1);
+		}
+		str = join_lines(str, trimmed, fd);
+		free(trimmed);
 		if (!str)
 		{
 			close(fd);
-			free(line);
 			exit(1);
 		}
-		free(line);
 		line = get_next_line(fd);
 	}
 	return (str);
 }
+
 
 char	*reading_file(int fd)
 {

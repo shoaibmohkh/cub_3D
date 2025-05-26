@@ -2,7 +2,8 @@ NAME = cub3D
 
 SRCS = src/main.c src/get_full_map.c src/utils_map.c src/exit_and_free.c \
 	src/checker/check_argument.c src/checker/check_map_solve.c \
-	src/checker/check_map_content.c src/checker/map_paths.c \
+	src/checker/check_map_content.c \
+	src/checker/check_map_content_two.c src/checker/map_paths.c \
 	src/checker/rgb_color.c src/print_struct.c src/get_real_map.c \
 	src/game/ray_cast.c src/game/key_press.c src/game/move_player.c \
 	src/game/loop.c src/game/floor_ceiling.c
