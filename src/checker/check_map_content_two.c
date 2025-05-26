@@ -83,9 +83,9 @@ void	wall_checker(t_all_struct *cub_map, int pos)
 		j++;
 	while (cub_map->map.map_two_d[pos][j])
 	{
-		if (cub_map->map.map_two_d[pos][j] == '1' ||
-			cub_map->map.map_two_d[pos][j] == ' ' ||
-			cub_map->map.map_two_d[pos][j] == '\t')
+		if (cub_map->map.map_two_d[pos][j] == '1'
+			|| cub_map->map.map_two_d[pos][j] == ' '
+			|| cub_map->map.map_two_d[pos][j] == '\t')
 			j++;
 		else
 			free_all(cub_map, 1, "\033[1;31merror in MAP\033[0m 😤\n");

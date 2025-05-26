@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_full_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:58:21 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 15:06:37 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:00:34 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,38 @@ char	*join_lines(char *str, char *line, int fd)
 	return (str);
 }
 
+int	is_all_whitespace(const char *s)
+{
+	while (*s)
+	{
+		if (*s != ' ' && *s != '\t' && *s != '\n')
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
 char	*read_and_join_lines(int fd, char *str)
 {
 	char	*line;
 	char	*trimmed;
-
 	line = get_next_line(fd);
 	while (line)
 	{
-		trimmed = ft_strtrim(line, " \t");
-		free(line);
-		line = NULL;
-		if (!trimmed)
+		if (is_all_whitespace(line))
 		{
-			close(fd);
-			free(str);
-			exit(1);
+			trimmed = ft_strtrim(line, " \t");
+			free(line);
+			line = trimmed;
+			if (!line)
+			{
+				close(fd);
+				free(str);
+				exit(1);
+			}
 		}
-		str = join_lines(str, trimmed, fd);
-		free(trimmed);
+		str = join_lines(str, line, fd);
+		free(line);
 		if (!str)
 		{
 			close(fd);

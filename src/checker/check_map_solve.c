@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_solve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:01:06 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 16:30:20 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:56:19 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,34 @@ int	ft_is_walkable(char c)
 	return (c == '0' || c == ' ' || ft_is_player(c));
 }
 
+int	ft_check_bounds(int x, int y, char **map, int rows)
+{
+	if (y < 0 || y >= rows || x < 0 || x >= (int)ft_strlen(map[y]))
+		return (0);
+	return (1);
+}
+
+void	init_directions(int *dx, int *dy)
+{
+	dx[0] = 1;
+	dx[1] = -1;
+	dx[2] = 0;
+	dx[3] = 0;
+	dy[0] = 0;
+	dy[1] = 0;
+	dy[2] = 1;
+	dy[3] = -1;
+}
+
 char	**ft_copy_map(char **map, int rows)
 {
 	char	**copy;
 	int		i;
 
+	i = 0;
 	copy = malloc(sizeof(char *) * (rows + 1));
 	if (!copy)
 		return (NULL);
-	i = 0;
 	while (i < rows)
 	{
 		copy[i] = ft_strdup(map[i]);
@@ -55,94 +74,114 @@ char	**ft_copy_map(char **map, int rows)
 	return (copy);
 }
 
-int	ft_check_bounds(int x, int y, char **map, int rows)
+void	set_player(t_all_struct *cub, t_point *player, int x, int y, char dir)
 {
-	if (y < 0 || y >= rows || x < 0 || x >= (int)ft_strlen(map[y]))
+	player->x = x;
+	player->y = y;
+	cub->map.x_player = x;
+	cub->map.y_player = y;
+	if (dir == 1)
+		cub->map.start_direction_of_player = 'N';
+	else if (dir == 2)
+		cub->map.start_direction_of_player = 'S';
+	else if (dir == 3)
+		cub->map.start_direction_of_player = 'E';
+	else if (dir == 4)
+		cub->map.start_direction_of_player = 'W';
+}
+
+int	find_player(char **map, t_all_struct *cub, t_point *player)
+{
+	int	x;
+	int	y;
+	int	count;
+	int	dir;
+
+	y = 0;
+	count = 0;
+	while (y < cub->map.row)
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			dir = ft_is_player(map[y][x]);
+			if (dir)
+			{
+				count++;
+				set_player(cub, player, x, y, dir);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (count == 1);
+}
+
+int	flood_fill(t_fill_data *data)
+{
+	t_point	curr;
+	int		i;
+	int		nx;
+	int		ny;
+
+	while (*(data->front) < *(data->back))
+	{
+		curr = data->queue[(*(data->front))++];
+		i = 0;
+		while (i < 4)
+		{
+			nx = curr.x + data->dx[i];
+			ny = curr.y + data->dy[i];
+			if (!ft_check_bounds(nx, ny, data->map, data->cub->map.row))
+				return (0);
+			if (ft_is_walkable(data->map[ny][nx]))
+			{
+				data->queue[(*(data->back))++] = (t_point){nx, ny};
+				data->map[ny][nx] = 'V';
+			}
+			i++;
+		}
+	}
+	return (1);
+}
+
+static int	validate_map_walkability(t_all_struct *cub, char **map, t_point player)
+{
+	t_point			queue[10000];
+	t_fill_data		data;
+	t_fill_state	state;
+
+	state.front = 0;
+	state.back = 0;
+	init_directions(state.dx, state.dy);
+	queue[state.back++] = player;
+	map[player.y][player.x] = 'V';
+	data.map = map;
+	data.queue = queue;
+	data.front = &state.front;
+	data.back = &state.back;
+	data.cub = cub;
+	data.dx = state.dx;
+	data.dy = state.dy;
+	if (!flood_fill(&data))
 		return (0);
 	return (1);
 }
 
 int	ft_check_map_validity(t_all_struct *cub)
 {
-	t_point	queue[10000];
-	int		front;
-	int		back;
-	t_point	curr;
-	t_point	player;
-	char	**map;
-	int		dx[4];
-	int		dy[4];
-	int		i;
-	int		nx;
-	int		ny;
-	int		player_count;
+	t_point		player;
+	char		**map;
+	int			valid;
 
-	dx[0] = 1;
-	dx[1] = -1;
-	dx[2] = 0;
-	dx[3] = 0;
-	dy[0] = 0;
-	dy[1] = 0;
-	dy[2] = 1;
-	dy[3] = -1;
 	map = ft_copy_map(cub->map.real_map_two_d, cub->map.row);
 	if (!map)
 		return (0);
-	front = 0;
-	back = 0;
-	player_count = 0;
-	player.x = -1;
-	player.y = -1;
-	for (int y = 0; y < cub->map.row; y++)
-	{
-		for (int x = 0; map[y][x]; x++)
-		{
-			if (ft_is_player(map[y][x]))
-			{
-				player_count++;
-				player.x = x;
-				player.y = y;
-				cub->map.x_player = x;
-				cub->map.y_player = y;
-				if (ft_is_player(map[y][x]) == 1)
-					cub->map.start_direction_of_player = 'N';
-				if (ft_is_player(map[y][x]) == 2)
-					cub->map.start_direction_of_player = 'S';
-				if (ft_is_player(map[y][x]) == 3)
-					cub->map.start_direction_of_player = 'E';
-				if (ft_is_player(map[y][x]) == 4)
-					cub->map.start_direction_of_player = 'W';
-			}
-		}
-	}
-	if (player_count != 1)
-	{
-		free_two_d(map);
-		return (0);
-	}
-	queue[back++] = player;
-	map[player.y][player.x] = 'V';
-	while (front < back)
-	{
-		curr = queue[front++];
-		i = 0;
-		while (i < 4)
-		{
-			nx = curr.x + dx[i];
-			ny = curr.y + dy[i];
-			if (!ft_check_bounds(nx, ny, map, cub->map.row))
-			{
-				free_two_d(map);
-				return (0);
-			}
-			if (ft_is_walkable(map[ny][nx]))
-			{
-				queue[back++] = (t_point){nx, ny};
-				map[ny][nx] = 'V';
-			}
-			i++;
-		}
-	}
+	if (!find_player(map, cub, &player))
+		return (free_two_d(map), 0);
+	valid = validate_map_walkability(cub, map, player);
 	free_two_d(map);
-	return (1);
+	return (valid);
 }
+
+

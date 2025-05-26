@@ -45,7 +45,7 @@ void	check_path(t_all_struct *cub_map, char *id, char *dest, int *index,
 			j++;
 		if (cub_map->map.map_two_d[i][j] == id[0] && cub_map->map.map_two_d[i][j
 			+ 1] == id[1] && (cub_map->map.map_two_d[i][j + 2] == ' '
-			|| cub_map->map.map_two_d[i][j + 2] == '\t'))
+				|| cub_map->map.map_two_d[i][j + 2] == '\t'))
 		{
 			j = extract_path(cub_map, i, j, dest, index);
 			while (cub_map->map.map_two_d[i][j] == ' '
@@ -63,27 +63,23 @@ void	check_path(t_all_struct *cub_map, char *id, char *dest, int *index,
 void	check_north_path(t_all_struct *cub_map)
 {
 	check_path(cub_map, "NO", cub_map->map.path_north_no,
-		&cub_map->map.index_north_line_no,
-		"\033[1;31merror in MAP\033[0m 😤\n");
+		&cub_map->map.index_north_line_no, "\033[1;31merror in MAP\033[0m 😤\n");
 }
 
 void	check_south_path(t_all_struct *cub_map)
 {
 	check_path(cub_map, "SO", cub_map->map.path_south_so,
-		&cub_map->map.index_south_line_so,
-		"\033[1;31merror in MAP\033[0m😤\n");
+		&cub_map->map.index_south_line_so, "\033[1;31merror in MAP\033[0m😤\n");
 }
 
 void	check_west_path(t_all_struct *cub_map)
 {
 	check_path(cub_map, "WE", cub_map->map.path_west_we,
-		&cub_map->map.index_west_line_we,
-		"\033[1;31merror in MAP\033[0m 😤\n");
+		&cub_map->map.index_west_line_we, "\033[1;31merror in MAP\033[0m 😤\n");
 }
 
 void	check_east_path(t_all_struct *cub_map)
 {
 	check_path(cub_map, "EA", cub_map->map.path_east_ea,
-		&cub_map->map.index_east_line_ea,
-		"\033[1;31merror in MAP\033[0m 😤\n");
+		&cub_map->map.index_east_line_ea, "\033[1;31merror in MAP\033[0m 😤\n");
 }
