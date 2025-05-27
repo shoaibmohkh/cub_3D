@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:53:00 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/27 15:41:39 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:28:08 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ void	init_game(t_all_struct *cub_map)
 	cub_map->game.all_struct = cub_map;
 	if (!load_texture(&cub_map->game.north, cub_map->game.mlx,
 			cub_map->map.path_north_no, cub_map))
-		return ;
+		free_all(cub_map, 1, "\033[1;31merror in MLX\033[0m 😤\n");
 	if (!load_texture(&cub_map->game.south, cub_map->game.mlx,
 			cub_map->map.path_south_so, cub_map))
-		return ;
+		free_all(cub_map, 1, "\033[1;31merror in MLX\033[0m 😤\n");
 	if (!load_texture(&cub_map->game.east, cub_map->game.mlx,
 			cub_map->map.path_east_ea, cub_map))
-		return ;
+		free_all(cub_map, 1, "\033[1;31merror in MLX\033[0m 😤\n");
 	if (!load_texture(&cub_map->game.west, cub_map->game.mlx,
 			cub_map->map.path_west_we, cub_map))
-		return ;
+		free_all(cub_map, 1, "\033[1;31merror in MLX\033[0m 😤\n");
 	init_player(cub_map);
 }
 

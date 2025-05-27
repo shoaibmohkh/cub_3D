@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:07:46 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/27 14:59:11 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:34:22 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(cub_map.game.mlx, game_loop, &cub_map);
 	mlx_loop(cub_map.game.mlx);
 	free_all(&cub_map, 0, NULL);
-	mlx_terminate(cub_map.game.mlx);
 	return (0);
 }
