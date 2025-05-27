@@ -53,7 +53,7 @@ typedef struct s_fill_state
 typedef struct s_fill_data
 {
 	char			**map;
-	t_point			*queue;
+	t_point			*array;
 	int				*front;
 	int				*back;
 	t_all_struct	*cub;
@@ -216,7 +216,7 @@ void	key_handler(mlx_key_data_t keydata, void *param);
 void	game_loop(void *param);
 int	load_texture(t_texture *tex, mlx_t *mlx, char *path, t_all_struct *cub_map);
 void	init_game(t_all_struct *cub_map);
-void	cleanup(t_all_struct *cub_map);
+void	delete_mlx(t_all_struct *cub_map);
 int	touch(float px, float py, t_all_struct *cub_map);
 void	handle_player_movement(t_all_struct *cub_map, float move_speed,
 		float *new_x, float *new_y);
@@ -261,6 +261,6 @@ int check_d_new_line(char **map_t, int start, int end);
 char **splitt(char *str);
 int	count_start_of_tmap(char **map_two_d);
 int	count_end_of_tmap(char **map_two_d);
-int is_map_line(const char *line);
+int is_map_line(char *line);
 void check_new_lines(t_all_struct *cub_map);
 #endif

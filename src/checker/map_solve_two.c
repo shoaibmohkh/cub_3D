@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_solve_two.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 20:14:44 by zsalah            #+#    #+#             */
-/*   Updated: 2025/05/26 20:18:47 by zsalah           ###   ########.fr       */
+/*   Updated: 2025/05/27 15:37:18 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	flood_fill(t_fill_data *data)
 
 	while (*(data->front) < *(data->back))
 	{
-		curr = data->queue[(*(data->front))++];
+		curr = data->array[(*(data->front))++];
 		i = 0;
 		while (i < 4)
 		{
@@ -51,7 +51,7 @@ int	flood_fill(t_fill_data *data)
 				return (0);
 			if (ft_is_walkable(data->map[ny][nx]))
 			{
-				data->queue[(*(data->back))++] = (t_point){nx, ny};
+				data->array[(*(data->back))++] = (t_point){nx, ny};
 				data->map[ny][nx] = 'V';
 			}
 			i++;
@@ -62,17 +62,17 @@ int	flood_fill(t_fill_data *data)
 
 int	validate_map_walkability(t_all_struct *cub, char **map, t_point player)
 {
-	t_point			queue[10000];
+	t_point			array[10000];
 	t_fill_data		data;
 	t_fill_state	state;
 
 	state.front = 0;
 	state.back = 0;
 	init_directions(state.dx, state.dy);
-	queue[state.back++] = player;
+	array[state.back++] = player;
 	map[player.y][player.x] = 'V';
 	data.map = map;
-	data.queue = queue;
+	data.array = array;
 	data.front = &state.front;
 	data.back = &state.back;
 	data.cub = cub;
@@ -93,7 +93,10 @@ int	ft_check_map_validity(t_all_struct *cub)
 	if (!map)
 		return (0);
 	if (!find_player(map, cub, &player))
-		return (free_two_d(map), 0);
+	{
+		free_two_d(map);
+		return (0);
+	}
 	valid = validate_map_walkability(cub, map, player);
 	free_two_d(map);
 	return (valid);

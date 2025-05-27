@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:59:18 by sal-kawa          #+#    #+#             */
-/*   Updated: 2024/09/05 14:59:23 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:02:52 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_isspace(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
 
 int	ft_atoi(const char *nptr)
 {

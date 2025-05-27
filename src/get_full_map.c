@@ -49,45 +49,41 @@ char	*reading_file(int fd)
 
 void	trim_non_map_lines(char **map_two_d, int start_of_map)
 {
-    int	i;
+	int		i;
+	char	*trimmed;
 
-    i = 0;
-    while (i < start_of_map)
-    {
-        char *trimmed = ft_strtrim(map_two_d[i], " \t");
-        if (!trimmed)
-            return ;
-        free(map_two_d[i]);
-        map_two_d[i] = trimmed;
-        i++;
-    }
+	i = 0;
+	while (i < start_of_map)
+	{
+		trimmed = ft_strtrim(map_two_d[i], " \t");
+		if (!trimmed)
+			return ;
+		free(map_two_d[i]);
+		map_two_d[i] = trimmed;
+		i++;
+	}
 }
 
 void	get_and_copies_map(t_all_struct *cub_map, int fd)
 {
 	cub_map->map.map_one_d = reading_file(fd);
 	if (!cub_map->map.map_one_d)
-		free_all(cub_map, 1,
-			"\033[1;31merror in reading map\033[0m 📛\n");
+		free_all(cub_map, 1, "\033[1;31merror in reading map\033[0m 📛\n");
 	check_new_lines(cub_map);
 	cub_map->map.map_two_d = ft_split(cub_map->map.map_one_d, '\n');
 	if (!cub_map->map.map_two_d)
-		free_all(cub_map, 1,
-			"\033[1;31mfail: in -split-\033[0m 📛\n");
+		free_all(cub_map, 1, "\033[1;31mfail: in -split-\033[0m 📛\n");
 	cub_map->map.start_of_map = count_start_of_map(cub_map);
 	if (cub_map->map.start_of_map == -1)
-		free_all(cub_map, 1,
-			"\033[1;31mfail: can't find the map\033[0m 📛\n");
+		free_all(cub_map, 1, "\033[1;31mfail: can't find the map\033[0m 📛\n");
 	trim_non_map_lines(cub_map->map.map_two_d, cub_map->map.start_of_map);
 	cub_map->map.end_of_map = count_end_of_map(cub_map);
 	cub_map->map.real_map_two_d = get_real_map_two_d(cub_map);
 	if (!cub_map->map.real_map_two_d)
-		free_all(cub_map, 1,
-			"\033[1;31mfail: can't copy the map\033[0m 📛\n");
+		free_all(cub_map, 1, "\033[1;31mfail: can't copy the map\033[0m 📛\n");
 	cub_map->map.real_map_one_d = get_real_map_one_d(cub_map);
 	if (!cub_map->map.real_map_one_d)
-		free_all(cub_map, 1,
-			"\033[1;31mfail: can't copy the map\033[0m 📛\n");
+		free_all(cub_map, 1, "\033[1;31mfail: can't copy the map\033[0m 📛\n");
 }
 
 void	get_map(t_all_struct *cub_map, int fd)

@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:42:49 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/24 20:41:40 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:41:36 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_all(t_all_struct *cub_map, int flag, char *error)
 		if (cub_map->map.real_map_one_d)
 			free(cub_map->map.real_map_one_d);
 	}
-	cleanup(cub_map);
+	delete_mlx(cub_map);
 	if (flag)
 		exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:53:00 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 15:11:15 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:41:39 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	init_game(t_all_struct *cub_map)
 	init_player(cub_map);
 }
 
-void	cleanup(t_all_struct *cub_map)
+void	delete_mlx(t_all_struct *cub_map)
 {
 	if (cub_map->game.north.texture)
 		mlx_delete_texture(cub_map->game.north.texture);
