@@ -1,13 +1,13 @@
 NAME = cub3D
 
 SRCS = src/main.c src/get_full_map.c src/get_full_map_two.c src/utils_map.c \
-	src/utils_map_two.c src/exit_and_free.c src/checker/check_double_new_line.c \
+	src/utils_map_two.c src/exit_and_free.c src/checker/check_double_new_line.c src/checker/check_double_new_line2.c \
 	src/checker/check_argument.c src/checker/check_map_solve.c \
 	src/checker/check_map_content.c src/checker/check_map_content_two.c \
 	src/checker/check_map_paths.c src/checker/map_paths.c src/checker/map_solve_two.c \
 	src/checker/check_rgb.c src/checker/rgb_color.c src/get_real_map.c \
 	src/game/ray_cast.c src/game/ray_cast1.c src/game/ray_cast2.c \
-	src/game/key_press.c src/game/move_player.c src/game/loop.c \
+	src/game/key_press.c src/game/move_player.c src/game/move_player2.c src/game/loop.c \
 	src/game/floor_ceiling.c
 
 OBJ_DIR = obj

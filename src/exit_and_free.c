@@ -48,12 +48,12 @@ void	free_all(t_all_struct *cub_map, int flag, char *error)
 			free(cub_map->map.real_map_one_d);
 	}
 	if (cub_map->game.mlx)
-        delete_mlx(cub_map);
+		delete_mlx(cub_map);
 	if (cub_map->game.mlx)
-    {
-        mlx_terminate(cub_map->game.mlx);
-        cub_map->game.mlx = NULL;
-    }
+	{
+		mlx_terminate(cub_map->game.mlx);
+		cub_map->game.mlx = NULL;
+	}
 	if (flag)
 		exit(EXIT_FAILURE);
 }

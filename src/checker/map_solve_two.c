@@ -85,9 +85,9 @@ int	validate_map_walkability(t_all_struct *cub, char **map, t_point player)
 
 int	ft_check_map_validity(t_all_struct *cub)
 {
-	t_point		player;
-	char		**map;
-	int			valid;
+	t_point	player;
+	char	**map;
+	int		valid;
 
 	map = ft_copy_map(cub->map.real_map_two_d, cub->map.row);
 	if (!map)

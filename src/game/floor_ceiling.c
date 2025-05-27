@@ -6,7 +6,7 @@
 /*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:56:36 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 17:22:53 by zsalah           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:17:46 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 	*pixel = color;
 }
 
-void	draw_half_screen(t_all_struct *cub_map, int start_y,
-		int end_y, uint32_t color)
+void	draw_half_screen(t_all_struct *cub_map, int start_y, int end_y,
+		uint32_t color)
 {
 	int	x;
 	int	y;

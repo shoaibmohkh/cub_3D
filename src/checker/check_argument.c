@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_argument.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 22:02:13 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/27 15:29:23 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:56:18 by zsalah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,17 @@ int	ft_is_player(char c)
 	if (c == 'W')
 		return (4);
 	return (0);
+}
+
+void	free_lines_on_error(char **lines, size_t limit)
+{
+	size_t	j;
+
+	j = 0;
+	while (j < limit)
+	{
+		free(lines[j]);
+		j++;
+	}
+	free(lines);
 }
