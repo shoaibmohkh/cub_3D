@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kawa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:22:13 by sal-kawa          #+#    #+#             */
-/*   Updated: 2024/09/05 15:22:17 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:55:04 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_isspace(unsigned char c);
 size_t	ft_strlen(const char *s);
 int		ft_toupper(int c);
 int		ft_tolower(int c);

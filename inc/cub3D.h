@@ -172,7 +172,6 @@ typedef struct s_map_state
 int	check_extension(char *filename);
 int	input_checker(int argc, char **argv);
 int	ft_is_player(char c);
-void	check_empty_lines(t_all_struct *cub_map);
 void	check_required_elements(t_all_struct *cub_map);
 int	validate_and_count_players(t_all_struct *cub_map);
 void	check_chararcters(t_all_struct *cub_map);
@@ -258,5 +257,10 @@ int	count_row(t_all_struct *cub_map);
 int	count_end_of_map(t_all_struct *cub_map);
 int	check_line_if_valid(t_all_struct *cub_map, int i, int line_start);
 void	update_map_state(t_map_state *state, int i, int is_valid);
-
+int check_d_new_line(char **map_t, int start, int end);
+char **splitt(char *str);
+int	count_start_of_tmap(char **map_two_d);
+int	count_end_of_tmap(char **map_two_d);
+int is_map_line(const char *line);
+void check_new_lines(t_all_struct *cub_map);
 #endif

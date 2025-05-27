@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:58:21 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/26 19:13:19 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:57:36 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,29 @@ char	*reading_file(int fd)
 	return (str);
 }
 
+void	trim_non_map_lines(char **map_two_d, int start_of_map)
+{
+    int	i;
+
+    i = 0;
+    while (i < start_of_map)
+    {
+        char *trimmed = ft_strtrim(map_two_d[i], " \t");
+        if (!trimmed)
+            return ;
+        free(map_two_d[i]);
+        map_two_d[i] = trimmed;
+        i++;
+    }
+}
+
 void	get_and_copies_map(t_all_struct *cub_map, int fd)
 {
 	cub_map->map.map_one_d = reading_file(fd);
 	if (!cub_map->map.map_one_d)
 		free_all(cub_map, 1,
 			"\033[1;31merror in reading map\033[0m 📛\n");
+	check_new_lines(cub_map);
 	cub_map->map.map_two_d = ft_split(cub_map->map.map_one_d, '\n');
 	if (!cub_map->map.map_two_d)
 		free_all(cub_map, 1,
@@ -61,6 +78,7 @@ void	get_and_copies_map(t_all_struct *cub_map, int fd)
 	if (cub_map->map.start_of_map == -1)
 		free_all(cub_map, 1,
 			"\033[1;31mfail: can't find the map\033[0m 📛\n");
+	trim_non_map_lines(cub_map->map.map_two_d, cub_map->map.start_of_map);
 	cub_map->map.end_of_map = count_end_of_map(cub_map);
 	cub_map->map.real_map_two_d = get_real_map_two_d(cub_map);
 	if (!cub_map->map.real_map_two_d)
