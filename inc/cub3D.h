@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsalah <zsalah@student.42amman.com>        +#+  +:+       +#+        */
+/*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:29:37 by zsalah            #+#    #+#             */
-/*   Updated: 2025/05/27 18:29:39 by zsalah           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:07:35 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ typedef struct s_game
 	mlx_t					*mlx;
 	mlx_image_t				*img;
 	char					**map;
+	t_player player;
 	t_all_struct			*all_struct;
 	t_texture				north;
 	t_texture				south;
@@ -199,6 +200,10 @@ typedef struct s_map_state
 	int						last_valid_line_newline;
 }							t_map_state;
 
+void 						draw_square(mlx_image_t *img, int x, int y, int size, uint32_t color, float scale);
+void 						draw_map(t_game *game);
+void 						draw_player(t_game *game);
+void 						draw_minimap(t_all_struct *cub_map);
 int							check_extension(char *filename);
 int							input_checker(int argc, char **argv);
 int							ft_is_player(char c);

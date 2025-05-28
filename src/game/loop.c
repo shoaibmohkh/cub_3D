@@ -6,7 +6,7 @@
 /*   By: sal-kawa <sal-kawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:53:00 by sal-kawa          #+#    #+#             */
-/*   Updated: 2025/05/27 17:28:08 by sal-kawa         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:08:57 by sal-kawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	game_loop(void *param)
 		start_x = start_x + fraction;
 		i = i + 1;
 	}
+	draw_minimap(cub_map);
 }
 
 int	load_texture(t_texture *tex, mlx_t *mlx, char *path, t_all_struct *cub_map)
